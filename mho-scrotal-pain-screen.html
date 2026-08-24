@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Male Health Online — Scrotal Pain Pattern Check</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F7F4EE;
+    --panel:#FFFFFF;
+    --ink:#1C2321;
+    --ink-soft:#5B6560;
+    --forest:#1B4332;
+    --forest-deep:#0F2B20;
+    --mint:#52B788;
+    --amber:#E08E45;
+    --coral:#D9524A;
+    --coral-deep:#A6332C;
+    --line:#DEDACB;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:560px;margin:0 auto;min-height:100vh;background:var(--panel);box-shadow:0 0 60px rgba(15,43,32,0.06);display:flex;flex-direction:column;position:relative;overflow:hidden;}
+  header.top{padding:20px 24px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .mark{width:34px;height:34px;border-radius:50%;background:var(--forest);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:15px;flex-shrink:0;}
+  .brand .name{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;color:var(--forest-deep);line-height:1.15;}
+  .brand .name small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-top:1px;}
+
+  .pulse-track{padding:0 24px;margin-top:2px;}
+  .pulse-svg{width:100%;height:34px;display:block;}
+  .pulse-bg{fill:none;stroke:var(--line);stroke-width:2;}
+  .pulse-fg{fill:none;stroke:var(--mint);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1000;stroke-dashoffset:1000;transition:stroke-dashoffset .6s cubic-bezier(.65,0,.35,1);}
+  .step-label{padding:2px 24px 10px;font-size:12px;color:var(--ink-soft);font-weight:600;letter-spacing:.02em;}
+
+  main{flex:1;padding:8px 24px 28px;display:flex;flex-direction:column;}
+
+  .screen{display:none;flex-direction:column;flex:1;animation:rise .45s ease both;}
+  .screen.active{display:flex;}
+  @keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--mint);margin:18px 0 10px;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:28px;line-height:1.18;color:var(--forest-deep);margin:0 0 14px;}
+  .lede{font-size:15.5px;line-height:1.6;color:var(--ink-soft);margin:0 0 18px;}
+  .meta-row{display:flex;gap:10px;margin:6px 0 20px;flex-wrap:wrap;}
+  .meta-chip{background:#F1EFE6;border:1px solid var(--line);border-radius:100px;padding:7px 13px;font-size:12.5px;font-weight:600;color:var(--forest-deep);display:flex;align-items:center;gap:6px;}
+  .meta-chip .dot{width:6px;height:6px;border-radius:50%;background:var(--mint);}
+
+  .track-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:8px;}
+  .track-card{border:1.5px solid var(--line);border-radius:var(--radius);padding:16px;display:flex;align-items:flex-start;gap:12px;}
+  .track-card .num{font-family:'Fraunces',serif;font-weight:600;font-size:20px;color:var(--mint);line-height:1;}
+  .track-card .t-title{font-weight:700;font-size:14.5px;color:var(--forest-deep);margin-bottom:3px;}
+  .track-card .t-sub{font-size:12.5px;color:var(--ink-soft);line-height:1.5;}
+
+  .disclaimer{font-size:11.5px;color:var(--ink-soft);line-height:1.55;background:#F1EFE6;border-radius:12px;padding:12px 14px;margin:20px 0 4px;}
+
+  button.primary{background:var(--forest);color:#fff;border:none;border-radius:100px;padding:16px 22px;font-size:15.5px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;width:100%;margin-top:18px;transition:transform .15s ease,background .15s ease;display:flex;align-items:center;justify-content:center;gap:8px;}
+  button.primary:active{transform:scale(.98);}
+  button.primary:hover{background:var(--forest-deep);}
+  button.primary.danger{background:var(--coral);}
+  button.primary.danger:hover{background:var(--coral-deep);}
+  button.ghost{background:transparent;color:var(--ink-soft);border:none;font-size:13.5px;font-weight:600;padding:12px;cursor:pointer;margin-top:6px;}
+
+  .q-section-tag{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mint);margin:14px 0 8px;}
+  .q-icon{width:52px;height:52px;border-radius:16px;background:#EEF6F1;color:var(--forest);display:flex;align-items:center;justify-content:center;margin-bottom:14px;animation:pop .35s ease;}
+  .q-icon svg{width:28px;height:28px;}
+  .q-text{font-family:'Fraunces',serif;font-weight:500;font-size:22px;line-height:1.32;color:var(--forest-deep);margin:0 0 24px;}
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .opt{border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:border-color .15s ease,background .15s ease,transform .1s ease;background:#fff;opacity:0;animation:optIn .4s ease forwards;}
+  @keyframes optIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .opt:active{transform:scale(.98);}
+  .opt:hover{border-color:var(--mint);}
+  .opt.selected{border-color:var(--forest);background:#EEF6F1;}
+  .opt .oval{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .opt.selected .oval{border-color:var(--forest);background:var(--forest);}
+  .opt.selected .oval::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;animation:pop .25s ease;}
+  @keyframes pop{from{transform:scale(0);}to{transform:scale(1);}}
+
+  .nav-row{display:flex;gap:10px;margin-top:auto;padding-top:22px;}
+  .nav-row button.primary{margin-top:0;flex:1;}
+  button.back{background:transparent;border:1.5px solid var(--line);color:var(--ink-soft);border-radius:100px;width:52px;font-size:16px;cursor:pointer;flex-shrink:0;}
+
+  /* INSIGHT */
+  .insight-icon{width:44px;height:44px;border-radius:50%;background:#EEF6F1;display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--forest);animation:pop .3s ease;}
+  .insight-tag{font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mint);margin:0 0 8px;}
+  .insight-title{font-family:'Fraunces',serif;font-weight:600;font-size:21px;line-height:1.3;color:var(--forest-deep);margin:0 0 14px;}
+  .insight-body{font-size:14.5px;line-height:1.65;color:var(--ink-soft);margin:0;}
+  .insight-card{border:1.5px solid var(--line);border-radius:var(--radius);padding:20px;margin-top:6px;}
+
+  /* EMERGENCY GATE */
+  .screen-emergency{background:linear-gradient(180deg,#FBEAE8,#FFFFFF 40%);margin:-8px -24px 0;padding:28px 24px 28px;border-radius:0 0 24px 24px;}
+  .emergency-icon{width:64px;height:64px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;margin:8px auto 18px;color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:30px;animation:alertPulse 1.6s ease-in-out infinite;}
+  @keyframes alertPulse{0%,100%{box-shadow:0 0 0 0 rgba(217,82,74,0.45);}50%{box-shadow:0 0 0 14px rgba(217,82,74,0);}}
+  .emergency-title{font-family:'Fraunces',serif;font-weight:700;font-size:24px;text-align:center;color:var(--coral-deep);margin:0 0 10px;line-height:1.25;}
+  .emergency-body{font-size:14.5px;line-height:1.65;color:var(--ink);text-align:center;margin:0 0 6px;}
+
+  /* GAUGE-STYLE RESULT (categorical, not numeric) */
+  .pattern-badge{align-self:center;margin:10px 0 6px;padding:10px 20px;border-radius:100px;font-weight:800;font-size:14px;text-align:center;animation:pop .35s ease;}
+  .result-card{border:1.5px solid var(--line);border-radius:var(--radius);padding:18px;margin:14px 0;}
+  .result-card h3{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin:0 0 8px;color:var(--forest-deep);}
+  .result-card p{font-size:14px;line-height:1.6;color:var(--ink-soft);margin:0 0 10px;}
+  .result-card p:last-child{margin-bottom:0;}
+
+  .factor-list{display:flex;flex-direction:column;gap:8px;margin:14px 0;}
+  .factor-row{display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;}
+  .factor-row .chip{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;}
+  .factor-row .chip.yes{background:var(--mint);}
+  .factor-row .chip.no{background:#C9C2AE;}
+
+  .cta-block{background:var(--forest-deep);color:#fff;border-radius:var(--radius);padding:22px 20px;margin-top:8px;text-align:center;}
+  .cta-block h4{font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin:0 0 8px;}
+  .cta-block p{font-size:13.5px;line-height:1.55;color:#CFE3D8;margin:0 0 16px;}
+  .cta-block a.primary-link{display:block;background:var(--mint);color:var(--forest-deep);text-decoration:none;padding:15px;border-radius:100px;font-weight:800;font-size:14.5px;}
+
+  .refs{font-size:10.5px;color:var(--ink-soft);line-height:1.6;margin-top:22px;padding-top:14px;border-top:1px solid var(--line);}
+  .refs b{color:var(--ink);}
+
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="mark">M</div>
+      <div class="name">Male Health Online<small>Dr. Prabir · Andrology &amp; Urology</small></div>
+    </div>
+  </header>
+
+  <div class="pulse-track">
+    <svg class="pulse-svg" viewBox="0 0 300 34" preserveAspectRatio="none">
+      <path class="pulse-bg" d="M0,17 L90,17 L100,4 L112,30 L124,17 L300,17"/>
+      <path class="pulse-fg" id="pulseFg" d="M0,17 L90,17 L100,4 L112,30 L124,17 L300,17"/>
+    </svg>
+  </div>
+  <div class="step-label" id="stepLabel">Before we start</div>
+
+  <main>
+
+    <!-- SCREEN: INTRO -->
+    <section class="screen active" id="screen-intro">
+      <div class="eyebrow">2-minute symptom-pattern check</div>
+      <h1>Scrotal Pain Pattern Check</h1>
+      <p class="lede">A structured screen using the same clinical differentiators used in practice to separate varicocele-related discomfort from other causes of scrotal pain — before you ever describe it out loud.</p>
+
+      <div class="meta-row">
+        <div class="meta-chip"><span class="dot"></span> 1 safety check</div>
+        <div class="meta-chip"><span class="dot"></span> 9 questions</div>
+        <div class="meta-chip"><span class="dot"></span> 100% private</div>
+      </div>
+
+      <div class="track-cards">
+        <div class="track-card">
+          <div class="num">01</div>
+          <div>
+            <div class="t-title">Emergency safety check, first</div>
+            <div class="t-sub">One question rules out symptoms that need immediate care, before anything else.</div>
+          </div>
+        </div>
+        <div class="track-card">
+          <div class="num">02</div>
+          <div>
+            <div class="t-title">Symptom-pattern screen</div>
+            <div class="t-sub">Laterality, pain character, positional change, and known infection red flags — the real clinical differentiators for scrotal pain.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="disclaimer"><b>Important:</b> there is no single validated questionnaire for scrotal pain the way there is for erectile function. This tool applies established clinical differentiators as an educational pattern-check — not a diagnosis. Varicocele can only be confirmed by physical exam, often with a scrotal Doppler ultrasound. Nothing you enter is stored or transmitted.</div>
+
+      <button class="primary" onclick="goTo('gate')">Start the check →</button>
+    </section>
+
+    <!-- SCREEN: SAFETY GATE -->
+    <section class="screen" id="screen-gate">
+      <div class="q-section-tag">Safety check</div>
+      <div class="q-text">Did the pain start suddenly and severely — within the last few hours — possibly with nausea, vomiting, swelling, or a testicle that looks higher or twisted?</div>
+      <div class="options">
+        <div class="opt" onclick="gateAnswer(true)"><span>Yes — this matches</span><span class="oval"></span></div>
+        <div class="opt" onclick="gateAnswer(false)"><span>No — my pain is more gradual / long-standing</span><span class="oval"></span></div>
+      </div>
+    </section>
+
+    <!-- SCREEN: EMERGENCY STOP -->
+    <section class="screen" id="screen-emergency">
+      <div class="screen-emergency">
+        <div class="emergency-icon">!</div>
+        <div class="emergency-title">This needs urgent in-person care — not this quiz</div>
+        <p class="emergency-body">Sudden, severe scrotal pain — especially with nausea, vomiting, or a testicle that looks high-riding or rotated — can mean testicular torsion. This is a surgical emergency where the blood supply to the testicle can be cut off, and outcomes depend heavily on how fast it's treated.</p>
+        <p class="emergency-body"><b>Please go to the nearest emergency department now</b>, or call emergency services — don't wait for a scheduled consultation.</p>
+      </div>
+      <button class="primary danger" onclick="window.open('tel:112')">Call emergency services</button>
+      <button class="ghost" onclick="restart()">This isn't urgent — take me back</button>
+    </section>
+
+    <!-- SCREEN: QUESTIONS -->
+    <section class="screen" id="screen-q">
+      <div class="q-section-tag" id="qTag">Symptom pattern</div>
+      <div class="q-icon" id="qIcon"></div>
+      <div class="q-text" id="qText"></div>
+      <div class="options" id="qOptions"></div>
+      <div class="nav-row">
+        <button class="back" id="backBtn" onclick="prevQ()">←</button>
+        <button class="primary" id="nextBtn" disabled onclick="nextQ()">Continue</button>
+      </div>
+    </section>
+
+    <!-- SCREEN: INSIGHT -->
+    <section class="screen" id="screen-insight">
+      <div class="insight-icon">i</div>
+      <div class="insight-tag">Clinical Note</div>
+      <div class="insight-title" id="insightTitle"></div>
+      <div class="insight-card"><p class="insight-body" id="insightBody"></p></div>
+      <div class="nav-row">
+        <button class="back" onclick="backFromInsight()">←</button>
+        <button class="primary" id="insightContinueBtn" onclick="advanceFromInsight()">Continue</button>
+      </div>
+    </section>
+
+    <!-- SCREEN: RESULT -->
+    <section class="screen" id="screen-result">
+      <div class="eyebrow">Your pattern check</div>
+      <div class="pattern-badge" id="patternBadge"></div>
+
+      <div class="result-card" id="resultReadout"></div>
+
+      <div class="factor-list" id="factorList"></div>
+
+      <div class="cta-block">
+        <h4>A pattern isn't a diagnosis.</h4>
+        <p>Varicocele — and every alternative on this list — is confirmed by a physical exam and, when indicated, a scrotal Doppler ultrasound. A 1-on-1 consult gets you that clarity directly.</p>
+        <a class="primary-link" id="bookLink" href="#" target="_blank" rel="noopener">Book my consultation with Dr. Prabir →</a>
+      </div>
+
+      <div class="refs"><b>How this works:</b> this screen uses established clinical differentiators for scrotal pain (laterality, positional and exertional change, palpable venous fullness, infection red flags) rather than a single validated psychometric scale — none currently exists for this symptom, unlike IIEF-5 for erectile function. Treat this as a structured starting point for a clinical conversation, not a result to self-treat from.</div>
+
+      <button class="ghost" onclick="restart()">Retake the check</button>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ================ CONFIG ================ */
+const BOOKING_URL = "https://drprabirbasu.zohobookings.in/drprabirbasu";
+/* ========================================= */
+
+// Each option carries: varicoceleWeight (0-2, higher = more classic varicocele pattern)
+// and a flag key used only for the infection-pattern override / fertility messaging.
+const ICONS = [
+  '<svg viewBox="0 0 40 40"><line x1="8" y1="20" x2="18" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="12,15 8,20 12,25" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="22" y1="20" x2="32" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><polyline points="28,15 32,20 28,25" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  '<svg viewBox="0 0 40 40"><polyline points="4,20 14,20 18,10 22,30 26,20 36,20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  '<svg viewBox="0 0 40 40"><circle cx="10" cy="10" r="3" fill="currentColor"/><line x1="10" y1="13" x2="10" y2="26" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="20" x2="24" y2="20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polyline points="21,17 24,20 21,23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="24" r="3" fill="currentColor"/><line x1="29" y1="27" x2="38" y2="27" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  '<svg viewBox="0 0 40 40"><line x1="10" y1="20" x2="30" y2="20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="4" y="14" width="6" height="12" rx="2" fill="currentColor"/><rect x="30" y="14" width="6" height="12" rx="2" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 40 40"><circle cx="17" cy="17" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="24" y1="24" x2="34" y2="34" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  '<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="20" y1="20" x2="20" y2="11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="20" x2="27" y2="24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  '<svg viewBox="0 0 40 40"><rect x="17" y="4" width="6" height="20" rx="3" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="20" cy="30" r="6" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 40 40"><path d="M20 32 C8 24 4 16 10 11 C14 8 19 9 20 14 C21 9 26 8 30 11 C36 16 32 24 20 32 Z" fill="currentColor"/></svg>',
+  '<svg viewBox="0 0 40 40"><path d="M20 4 L34 10 V19 C34 28 28 34 20 36 C12 34 6 28 6 19 V10 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><line x1="20" y1="14" x2="20" y2="22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="27" r="1.5" fill="currentColor"/></svg>'
+];
+
+const questions = [
+  {
+    tag:"Symptom pattern (1/9)",
+    text:"Which side is the pain or discomfort on?",
+    opts:[
+      ["Left side only", 2],
+      ["Right side only", 0],
+      ["Both sides", 1],
+      ["Not sure / hard to localise", 0]
+    ],
+    insight:{title:"Why left-sided matters", body:"Varicoceles occur on the left side in roughly 85–90% of cases. This is anatomical — the left testicular vein drains into the renal vein at a sharp angle, creating more back-pressure than the right side, which drains more directly. Right-sided-only pain makes clinicians look harder at other causes first."}
+  },
+  {
+    tag:"Symptom pattern (2/9)",
+    text:"How would you best describe the sensation?",
+    opts:[
+      ["Dull ache or heaviness", 2],
+      ["Dragging / pulling sensation", 2],
+      ["Sharp or stabbing pain", 0],
+      ["Burning sensation", 0]
+    ],
+    insight:{title:"Character of pain narrows the list", body:"A dull ache or dragging heaviness — rather than sharp or stabbing pain — is the classic description of varicocele-related discomfort. Sharp, sudden pain more often points toward torsion, epididymitis, or a kidney stone radiating downward."}
+  },
+  {
+    tag:"Symptom pattern (3/9)",
+    text:"Does it change with position or time of day?",
+    opts:[
+      ["Worse standing or by evening, better lying down", 2],
+      ["No clear pattern with position", 0],
+      ["Actually worse lying down", 0],
+      ["Haven't noticed either way", 1]
+    ],
+    insight:{title:"Gravity is the tell", body:"Varicocele discomfort classically builds through the day with standing and eases when lying flat, because gravity affects venous pooling in the dilated pampiniform plexus. Pain that's unaffected by position — or worse lying down — points elsewhere."}
+  },
+  {
+    tag:"Symptom pattern (4/9)",
+    text:"Does physical exertion — heavy lifting, prolonged standing, intense exercise — make it worse?",
+    opts:[
+      ["Yes, clearly worse with exertion", 2],
+      ["Mildly worse", 1],
+      ["No real effect", 0],
+      ["Pain improves with rest specifically", 1]
+    ],
+    insight:{title:"Exertion raises venous pressure", body:"Heavy lifting and prolonged standing increase pressure in the pelvic and scrotal veins, which is why varicocele discomfort often tracks closely with activity level — worse on gym days or long shifts on your feet, quieter on rest days."}
+  },
+  {
+    tag:"Symptom pattern (5/9)",
+    text:"Have you noticed a soft, twisted fullness above the testicle — sometimes described as a 'bag of worms' — especially when standing?",
+    opts:[
+      ["Yes, a noticeable soft lump or fullness", 2],
+      ["Some fullness, but not sure what it is", 1],
+      ["No, feels normal on self-check", 0],
+      ["Haven't checked", 0]
+    ],
+    insight:{title:"The classic exam finding", body:"The 'bag of worms' texture — soft, twisted veins palpable above the testicle, more prominent standing and reducing when lying down — is the hallmark physical exam finding for varicocele. Its absence doesn't rule it out — some are only visible on ultrasound — but its presence is a strong pointer."}
+  },
+  {
+    tag:"Symptom pattern (6/9)",
+    text:"How long has this been going on?",
+    opts:[
+      ["More than 3 months", 2],
+      ["1–3 months", 1],
+      ["1–4 weeks", 0],
+      ["Under 1 week", 0]
+    ],
+    insight:{title:"Timeline fits the diagnosis", body:"Chronic, slowly-developing discomfort fits the natural course of varicocele, which tends to build gradually rather than appear suddenly. A pain that's brand-new this week deserves its own separate look, regardless of the pattern otherwise."}
+  },
+  {
+    tag:"Symptom pattern (7/9)",
+    text:"Any fever, burning with urination, or discharge alongside the pain?",
+    opts:[
+      ["No, none of these", 0],
+      ["Yes, one or more of these", -99]
+    ],
+    insight:{title:"This changes the pathway entirely", body:"Fever, urinary burning, or discharge alongside scrotal pain points toward an infectious process — epididymitis, orchitis, or a urinary tract infection — which needs antibiotics and is evaluated quite differently from varicocele. This is flagged separately in your result below."}
+  },
+  {
+    tag:"Symptom pattern (8/9)",
+    text:"Is fertility or family planning a current concern for you?",
+    opts:[
+      ["Yes, actively trying to conceive", 0],
+      ["Not currently, but may in the future", 0],
+      ["No", 0],
+      ["Already have children, not a current concern", 0]
+    ],
+    insight:{title:"Why this question is in here at all", body:"Varicocele shows up in a meaningful share of men being evaluated for infertility, since it can affect testicular temperature regulation and semen parameters over time. It doesn't change your pattern score — but it does change how proactively this is worth investigating."}
+  },
+  {
+    tag:"Symptom pattern (9/9)",
+    text:"Any recent injury or trauma to the groin or scrotal area?",
+    opts:[
+      ["No recent trauma", 0],
+      ["Yes, recent trauma", -50]
+    ],
+    insight:{title:"Trauma is its own pathway", body:"Recent injury can cause scrotal pain through mechanisms unrelated to varicocele — a hematoma or testicular contusion, for example — and is worked up differently, sometimes urgently depending on severity."}
+  }
+];
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let infectionFlag = false;
+let traumaFlag = false;
+
+const pulseFg = document.getElementById('pulseFg');
+const stepLabel = document.getElementById('stepLabel');
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function goTo(id){
+  showScreen('screen-'+id);
+  if(id==='gate') stepLabel.textContent = "Safety check";
+}
+
+function gateAnswer(isEmergency){
+  if(isEmergency){
+    showScreen('screen-emergency');
+    stepLabel.textContent = "Please seek care now";
+    pulseFg.style.strokeDashoffset = 1000;
+  } else {
+    current = 0;
+    renderQuestion();
+    showScreen('screen-q');
+  }
+}
+
+function updatePulse(extra){
+  const total = questions.length;
+  const pct = (current + (extra||0)) / total;
+  const len = 1000;
+  pulseFg.style.strokeDashoffset = len - (len*pct);
+  stepLabel.textContent = "Question " + (current+1) + " of " + total;
+}
+
+function renderQuestion(){
+  const q = questions[current];
+  document.getElementById('qTag').textContent = q.tag;
+  document.getElementById('qIcon').innerHTML = ICONS[current];
+  document.getElementById('qText').textContent = q.text;
+
+  const optWrap = document.getElementById('qOptions');
+  optWrap.innerHTML = "";
+  q.opts.forEach(([label,val], idx)=>{
+    const div = document.createElement('div');
+    div.className = 'opt' + (answers[current]===idx ? ' selected':'');
+    div.style.animationDelay = (idx*0.06)+'s';
+    div.innerHTML = '<span>'+label+'</span><span class="oval"></span>';
+    div.onclick = ()=>{ answers[current]=idx; renderQuestion(); };
+    optWrap.appendChild(div);
+  });
+
+  document.getElementById('nextBtn').disabled = answers[current]===null;
+  document.getElementById('backBtn').style.visibility = current===0 ? 'hidden':'visible';
+  updatePulse();
+}
+
+function nextQ(){
+  if(answers[current]===null) return;
+  showInsight();
+}
+
+function showInsight(){
+  const note = questions[current].insight;
+  document.getElementById('insightTitle').textContent = note.title;
+  document.getElementById('insightBody').textContent = note.body;
+  document.getElementById('insightContinueBtn').textContent = current===questions.length-1 ? "See my pattern →" : "Continue";
+  updatePulse(0.5);
+  showScreen('screen-insight');
+}
+
+function advanceFromInsight(){
+  if(current < questions.length-1){
+    current++;
+    renderQuestion();
+    showScreen('screen-q');
+  } else {
+    showResults();
+  }
+}
+
+function prevQ(){
+  if(current===0) return;
+  current--;
+  renderQuestion();
+  showScreen('screen-q');
+}
+
+function backFromInsight(){
+  renderQuestion();
+  showScreen('screen-q');
+}
+
+function valueOf(i){
+  // answers[i] is now the selected OPTION INDEX for question i — resolve to its scored value.
+  return answers[i]===null ? null : questions[i].opts[answers[i]][1];
+}
+
+function showResults(){
+  const v = questions.map((q,i)=>valueOf(i));
+
+  // Question 7 (index 6): infection flag override. Question 9 (index 8): trauma flag.
+  infectionFlag = v[6] === -99;
+  traumaFlag = v[8] === -50;
+
+  const varicoceleScore = [0,1,2,3,4].reduce((sum,i)=> sum + (v[i] > 0 ? v[i] : 0), 0);
+
+  const badge = document.getElementById('patternBadge');
+  const readout = document.getElementById('resultReadout');
+  let label, bg, color, message;
+
+  if(infectionFlag){
+    label = "Infection-pattern flagged"; bg = "#FBEBDD"; color = "#A6531F";
+    message = "Your answers include fever, urinary burning, or discharge alongside the pain. That combination points toward an infectious cause — epididymitis, orchitis, or a urinary tract infection — rather than varicocele, and typically needs prompt evaluation and antibiotics rather than a routine wait-and-watch approach.";
+  } else if(traumaFlag){
+    label = "Recent trauma flagged"; bg = "#FBEBDD"; color = "#A6531F";
+    message = "You've reported recent injury to the area. This is evaluated on its own pathway — a hematoma or contusion can look and feel different from varicocele-related discomfort, and depending on severity may need a prompt in-person check.";
+  } else if(varicoceleScore >= 7){
+    label = "Pattern strongly consistent with varicocele"; bg = "#E7F5EC"; color = "var(--forest-deep)";
+    message = "Left-sided, positional, exertion-linked discomfort with a palpable fullness is the classic varicocele presentation. This pattern is worth a physical exam and, most likely, a confirmatory scrotal Doppler ultrasound.";
+  } else if(varicoceleScore >= 4){
+    label = "Mixed pattern — varicocele possible"; bg = "#FBF0E5"; color = "#A6621F";
+    message = "Some features fit varicocele, others don't fit as cleanly. This is common — presentations aren't always textbook. An exam is the only reliable way to sort out which features are driving your symptoms.";
+  } else {
+    label = "Pattern doesn't fit typical varicocele"; bg = "#F1EFE6"; color = "var(--ink)";
+    message = "Your answers don't line up strongly with the classic varicocele pattern. That's useful information too — it means an exam should cast a wider net, considering hydrocele, epididymal cysts, referred pain, or a musculoskeletal source.";
+  }
+
+  badge.textContent = label;
+  badge.style.background = bg;
+  badge.style.color = color;
+
+  readout.innerHTML = "<h3>What your answers suggest</h3><p>"+message+"</p><p>This is a structured pattern-check, not a diagnosis — varicocele and every alternative above is confirmed by an in-person exam, sometimes with imaging.</p>";
+
+  const factors = [
+    ["Left-sided pain", v[0]===2],
+    ["Dull ache / dragging sensation", v[1]===2],
+    ["Worse standing, better lying down", v[2]===2],
+    ["Worse with exertion", v[3]>=1],
+    ["Palpable fullness noted", v[4]>=1],
+    ["Chronic (1+ months)", v[5]>=1],
+    ["Infection signs present", infectionFlag],
+    ["Recent trauma", traumaFlag]
+  ];
+  const list = document.getElementById('factorList');
+  list.innerHTML = "";
+  factors.forEach(([label,yes])=>{
+    const row = document.createElement('div');
+    row.className = 'factor-row';
+    row.innerHTML = '<span class="chip '+(yes?'yes':'no')+'">'+(yes?'✓':'–')+'</span><span>'+label+'</span>';
+    list.appendChild(row);
+  });
+
+  document.getElementById('bookLink').href = BOOKING_URL;
+  showScreen('screen-result');
+  stepLabel.textContent = "Result";
+}
+
+function restart(){
+  current = 0;
+  answers = new Array(questions.length).fill(null);
+  infectionFlag = false; traumaFlag = false;
+  pulseFg.style.strokeDashoffset = 1000;
+  showScreen('screen-intro');
+  stepLabel.textContent = "Before we start";
+}
+</script>
+</body>
+</html>
