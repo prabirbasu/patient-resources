@@ -3,13 +3,44 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dr Prabir Basu — Urologist &amp; Andrologist, Kolkata</title>
+  <title>Dr Prabir Basu — Urologist &amp; Andrologist, Kolkata | Penile Implants &amp; Men's Health</title>
   <meta name="description" content="Dr Prabir Basu, Consultant Urologist and Andrologist in Kolkata. Penile implants, reconstructive andrology, ED, male fertility and functional urology. Online consultations via Male Health Online.">
+  <link rel="canonical" href="https://prabirbasu.github.io/patient-resources/">
   <meta property="og:title" content="Dr Prabir Basu — Urologist &amp; Andrologist, Kolkata">
   <meta property="og:description" content="Penile implants, reconstructive andrology, ED as a vascular sentinel event, male fertility. Book an online consultation.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://prabirbasu.github.io/patient-resources/">
+  <meta property="og:image" content="https://prabirbasu.github.io/patient-resources/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#10283A">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2310283A'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' fill='%23E5A02E' text-anchor='middle'%3EPB%3C/text%3E%3C/svg%3E">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Physician",
+    "name": "Dr Prabir Basu",
+    "image": "https://prabirbasu.github.io/patient-resources/prabir-basu.webp",
+    "url": "https://prabirbasu.github.io/patient-resources/",
+    "medicalSpecialty": "Urology",
+    "description": "Consultant urologist and andrologist in Kolkata. Penile implants, reconstructive andrology, erectile dysfunction, male fertility and functional urology. Consultations in Bengali and English.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kolkata",
+      "addressRegion": "West Bengal",
+      "addressCountry": "IN"
+    },
+    "sameAs": [
+      "https://www.youtube.com/@drprabirbasu",
+      "https://www.youtube.com/@docmanbyprabirbasu",
+      "https://www.drprabirbasu.com/",
+      "https://www.linkedin.com/in/drprabirbasu",
+      "https://substack.com/@drprabirbasu",
+      "https://malehealthonlinekolkata.com/"
+    ]
+  }
+  </script>
   <style>
     html { color-scheme: light dark; }
     body { margin: 0; }
@@ -33,6 +64,7 @@
     --navy-panel: #10283A;
     --navy-text: #E6EDF1;
     --navy-muted: #9AAAB5;
+    --danger: #B3261E;
     --shadow: 0 1px 2px rgba(16,40,58,.06), 0 8px 24px rgba(16,40,58,.06);
   }
   @media (prefers-color-scheme: dark) {
@@ -51,6 +83,7 @@
       --navy-panel: #081521;
       --navy-text: #E6EDF1;
       --navy-muted: #8B9DA9;
+      --danger: #F2A19B;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
     }
   }
@@ -69,10 +102,12 @@
     --navy-panel: #081521;
     --navy-text: #E6EDF1;
     --navy-muted: #8B9DA9;
+    --danger: #F2A19B;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
   }
 
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--ground);
@@ -99,6 +134,14 @@
   }
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 
+  /* Skip link */
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 50;
+    background: var(--navy-panel); color: var(--navy-text);
+    padding: 10px 16px; border-radius: 6px; text-decoration: none; font-weight: 600;
+  }
+  .skip:focus { left: 16px; top: 16px; }
+
   /* ---------- Top bar ---------- */
   .topbar {
     display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -112,10 +155,18 @@
     font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 15px;
   }
   .brand-name { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 17px; }
-  .topnav { display: flex; gap: 22px; }
+  .top-actions { display: flex; align-items: center; gap: 14px; }
+  .topnav { display: flex; gap: 18px; }
   .topnav a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: 15px; }
   .topnav a:hover { color: var(--ink); }
-  @media (max-width: 640px) { .topnav { display: none; } }
+  .theme-toggle {
+    appearance: none; cursor: pointer; flex: none;
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    display: grid; place-items: center; font-size: 16px; line-height: 1;
+  }
+  .theme-toggle:hover { border-color: var(--teal); }
+  @media (max-width: 720px) { .topnav { display: none; } }
 
   /* ---------- Hero ---------- */
   .hero {
@@ -143,6 +194,17 @@
   .btn-ghost { border-color: var(--line); color: var(--ink); background: var(--surface); }
   .btn-ghost:hover { border-color: var(--teal); }
 
+  .portrait { margin: 0 0 16px; }
+  .portrait img {
+    display: block; width: 100%; height: auto;
+    aspect-ratio: 4 / 5; object-fit: cover; object-position: center 18%;
+    border-radius: 10px; border: 1px solid var(--line); box-shadow: var(--shadow);
+  }
+  @media (max-width: 800px) {
+    .hero { align-items: start; }
+    .portrait img { aspect-ratio: 16 / 11; object-position: center 12%; }
+  }
+
   .ledger {
     background: var(--navy-panel); color: var(--navy-text);
     border-radius: 10px; padding: 22px 24px 8px;
@@ -159,7 +221,7 @@
   @media (max-width: 800px) { .hero { grid-template-columns: 1fr; } }
 
   /* ---------- Sections ---------- */
-  section { padding: 44px 0; border-top: 1px solid var(--line); }
+  section { padding: 44px 0; border-top: 1px solid var(--line); scroll-margin-top: 16px; }
   .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
   .sec-head h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; letter-spacing: -.01em; }
   .sec-head .mono { color: var(--muted); }
@@ -173,7 +235,8 @@
   }
   .tab:hover { color: var(--ink); }
   .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
-  .tab:focus-visible, .chip:focus-visible, .acc button:focus-visible, .btn:focus-visible {
+  .tab:focus-visible, .chip:focus-visible, .acc button:focus-visible, .btn:focus-visible,
+  .theme-toggle:focus-visible, .skip:focus-visible {
     outline: 2px solid var(--teal); outline-offset: 2px;
   }
   .panel { padding-top: 28px; }
@@ -209,9 +272,9 @@
   }
   .plain li strong { font-weight: 600; color: var(--ink); }
 
-  /* Journey (implant tab) */
+  /* Journey (implant tab & logistics) */
   .journey { display: grid; gap: 0; margin-top: 4px; }
-  .step { display: grid; grid-template-columns: 56px 1fr; gap: 14px; padding: 12px 0; border-top: 1px dashed var(--line); }
+  .step { display: grid; grid-template-columns: 84px 1fr; gap: 14px; padding: 12px 0; border-top: 1px dashed var(--line); }
   .step:first-child { border-top: 0; }
   .step .when { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--teal); padding-top: 4px; letter-spacing: .04em; }
   .step .what strong { display: block; color: var(--ink); font-weight: 600; }
@@ -233,9 +296,9 @@
     background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
     padding: 18px; display: grid; grid-template-rows: auto 1fr auto; gap: 10px;
     text-decoration: none; color: inherit; min-height: 168px;
-    transition: border-color .12s ease, transform .12s ease;
+    transition: border-color .12s ease, transform .12s ease, box-shadow .12s ease;
   }
-  .card:hover { border-color: var(--teal); transform: translateY(-1px); }
+  .card:hover { border-color: var(--teal); transform: translateY(-1px); box-shadow: var(--shadow); }
   .card[hidden] { display: none; }
   .card .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
   .card .platform { font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 18px; color: var(--ink); }
@@ -256,6 +319,31 @@
   .fw p { font-size: 15px; color: var(--muted); }
   .fw .mono { color: var(--teal); display: block; margin-bottom: 8px; }
 
+  /* ---------- Myths ---------- */
+  .myth-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  @media (max-width: 700px) { .myth-grid { grid-template-columns: 1fr; } }
+  .myth {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+    padding: 18px; display: grid; gap: 10px; align-content: start;
+  }
+  .myth .tag {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--danger);
+  }
+  .myth .statement {
+    font-family: "Bricolage Grotesque", sans-serif; font-weight: 600; font-size: 18px;
+    color: var(--ink); line-height: 1.25;
+  }
+  .myth .correction {
+    font-size: 15px; color: var(--muted);
+    border-top: 1px dashed var(--line); padding-top: 10px;
+  }
+  .myth .correction strong {
+    display: block; margin-bottom: 4px; color: var(--teal);
+    font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+
   /* ---------- Accordion ---------- */
   .acc { border-top: 1px solid var(--line); }
   .acc-item { border-bottom: 1px solid var(--line); }
@@ -270,12 +358,14 @@
   .acc .ans[hidden] { display: none; }
 
   /* ---------- Book strip ---------- */
+  .book-sec { border-top: 0; padding-top: 0; }
   .book {
     background: var(--navy-panel); color: var(--navy-text); border-radius: 10px;
     padding: 30px 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
   }
   .book h2 { color: var(--navy-text); font-size: 26px; font-weight: 600; }
   .book p { color: var(--navy-muted); margin-top: 6px; max-width: 36em; }
+  .book .bn { display: block; margin-top: 12px; color: var(--accent); font-size: 16px; }
   @media (max-width: 700px) { .book { grid-template-columns: 1fr; } }
 
   footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
@@ -283,25 +373,32 @@
   footer .mono { display: block; margin-bottom: 8px; }
 
   @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
     * { transition: none !important; }
   }
 </style>
 
 </head>
 <body>
+<a class="skip" href="#focus">Skip to content</a>
 <div class="wrap">
   <header class="topbar">
     <a class="brand" href="#top">
       <span class="brand-mark">PB</span>
       <span class="brand-name">Dr Prabir Basu</span>
     </a>
-    <nav class="topnav" aria-label="Page sections">
-      <a href="#focus">Focus areas</a>
-      <a href="#follow">Follow</a>
-      <a href="#frameworks">Frameworks</a>
-      <a href="#faq">Implant FAQ</a>
-      <a href="#book">Consult</a>
-    </nav>
+    <div class="top-actions">
+      <nav class="topnav" aria-label="Page sections">
+        <a href="#focus">Focus</a>
+        <a href="#follow">Follow</a>
+        <a href="#frameworks">Frameworks</a>
+        <a href="#myths">Myths</a>
+        <a href="#logistics">Cost &amp; planning</a>
+        <a href="#faq">FAQ</a>
+        <a href="#book">Consult</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Theme: auto (click for light)">◐</button>
+    </div>
   </header>
 
   <div class="hero" id="top">
@@ -319,6 +416,12 @@
       </div>
     </div>
 
+    <div>
+    <figure class="portrait">
+      <img src="prabir-basu.webp" width="800" height="1000"
+           alt="Dr Prabir Basu, urologist and andrologist, Kolkata"
+           loading="eager" decoding="async">
+    </figure>
     <aside class="ledger" aria-label="Credentials">
       <span class="mono">Credentials</span>
       <dl>
@@ -328,6 +431,7 @@
         <div class="row"><dt>Forums</dt><dd>Named panelist at national urology conclaves (incl. FFUS) · Andrology Connect · international andrology panels</dd></div>
       </dl>
     </aside>
+    </div>
   </div>
 
   <!-- ================= FOCUS AREAS ================= -->
@@ -339,9 +443,9 @@
 
     <div class="tabs" role="tablist" aria-label="Focus areas">
       <button class="tab" role="tab" id="tab-implant" aria-selected="true" aria-controls="panel-implant">Implants &amp; reconstruction</button>
-      <button class="tab" role="tab" id="tab-ed" aria-selected="false" aria-controls="panel-ed">ED &amp; vascular health</button>
-      <button class="tab" role="tab" id="tab-fert" aria-selected="false" aria-controls="panel-fert">Male fertility</button>
-      <button class="tab" role="tab" id="tab-func" aria-selected="false" aria-controls="panel-func">Functional urology</button>
+      <button class="tab" role="tab" id="tab-ed" aria-selected="false" aria-controls="panel-ed" tabindex="-1">ED &amp; vascular health</button>
+      <button class="tab" role="tab" id="tab-fert" aria-selected="false" aria-controls="panel-fert" tabindex="-1">Male fertility</button>
+      <button class="tab" role="tab" id="tab-func" aria-selected="false" aria-controls="panel-func" tabindex="-1">Functional urology</button>
     </div>
 
     <!-- Implants -->
@@ -565,6 +669,65 @@
     </div>
   </section>
 
+  <!-- ================= MYTHS ================= -->
+  <section id="myths">
+    <div class="sec-head">
+      <h2>Implant myths, corrected</h2>
+      <span class="mono">What the internet gets wrong</span>
+    </div>
+    <div class="myth-grid">
+      <div class="myth">
+        <span class="tag">Myth</span>
+        <p class="statement">“An implant is mutilation — a last resort nobody chooses.”</p>
+        <p class="correction"><strong>Fact</strong>It is chosen, not imposed. By the time most men reach implant surgery, natural erectile function is already lost to diabetes, surgery or Peyronie's disease. The implant is what reliably restores it — which is why candidacy is confirmed with a Doppler and a proper trial of lesser treatments first.</p>
+      </div>
+      <div class="myth">
+        <span class="tag">Myth</span>
+        <p class="statement">“The implant will make my penis bigger.”</p>
+        <p class="correction"><strong>Fact</strong>It restores firmness, not size. Erect length after surgery usually matches what it was before ED took hold. Many men perceive a gain simply because their erections become dependable again — and inflated girth is often fuller than the erections they have now.</p>
+      </div>
+      <div class="myth">
+        <span class="tag">Myth</span>
+        <p class="statement">“Diabetes means surgery is off the table.”</p>
+        <p class="correction"><strong>Fact</strong>Well-controlled diabetics are among the commonest implant recipients — diabetes is one of the leading causes of the severe ED implants treat. Poorly controlled sugar does raise infection risk, which is exactly why HbA1c targets are set and met before a date is fixed.</p>
+      </div>
+      <div class="myth">
+        <span class="tag">Myth</span>
+        <p class="statement">“The pump will show, or my partner will feel it.”</p>
+        <p class="correction"><strong>Fact</strong>The pump sits behind the testicles, small and soft, and is found only if deliberately searched for. Deflated, nothing is visible. Partners are told when the patient chooses to tell them — and most say they would never have known.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COST & LOGISTICS ================= -->
+  <section id="logistics">
+    <div class="sec-head">
+      <h2>Cost, insurance &amp; planning your trip</h2>
+      <span class="mono">Kolkata · patients from across India &amp; abroad</span>
+    </div>
+    <div class="panel-grid">
+      <div class="body">
+        <h3>What penile implant surgery costs</h3>
+        <p class="lead">Most implant patients travel to a specialist centre. Here is how cost, insurance and the trip itself usually work — no surprises.</p>
+        <p>The cost of penile implant surgery depends mainly on the device chosen — a malleable implant and an imported three-piece inflatable system differ considerably — along with the hospital, the anaesthesia and any additional work such as Peyronie's correction. Rather than quote numbers on a webpage, the honest approach is the one this practice follows: you receive a clear written estimate after your assessment, before any commitment is made.</p>
+        <p><strong>Insurance:</strong> most Indian insurers classify penile implant surgery as elective and decline claims. Where ED follows prostate cancer treatment, diabetes or Peyronie's disease, documentation of medical necessity can support an appeal. The paperwork is prepared for you.</p>
+        <p><strong>From Bangladesh, Nepal or elsewhere:</strong> everything starts with a video consultation. You receive a summary letter for visa and travel planning, surgery dates are fixed around your sugar control, and a companion is advised for the first week.</p>
+        <p style="font-size:13px; color:var(--muted);">Costs vary widely between devices and hospitals; a written estimate is always provided after assessment.</p>
+      </div>
+      <div>
+        <div class="sub" style="margin-top:0;">
+          <h4>Planning your visit, step by step</h4>
+          <div class="journey">
+            <div class="step"><div class="when">Step 1</div><div class="what"><strong>Video consult</strong><span>Assessment, IIEF-5, review of Doppler reports and a device discussion. You leave with a written plan and estimate.</span></div></div>
+            <div class="step"><div class="when">Step 2</div><div class="what"><strong>Preparation</strong><span>HbA1c brought to target, blood thinners adjusted, travel dates fixed around the operating list.</span></div></div>
+            <div class="step"><div class="when">Step 3</div><div class="what"><strong>Surgery &amp; recovery</strong><span>One night in hospital, wound check around day 5–7, then fit to fly home.</span></div></div>
+            <div class="step"><div class="when">Step 4</div><div class="what"><strong>Activation &amp; follow-up</strong><span>Week 4–6: you learn to use the device, in clinic or by guided video call, with WhatsApp follow-up.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= FAQ ================= -->
   <section id="faq">
     <div class="sec-head">
@@ -573,38 +736,47 @@
     </div>
     <div class="acc" id="faq-acc">
       <div class="acc-item">
-        <button aria-expanded="false">Will anyone be able to tell I have an implant?<span class="plus">+</span></button>
-        <div class="ans" hidden>No. All components sit inside the body. When deflated, the penis looks and feels natural; when inflated, it is firm like a normal erection. Partners generally cannot tell unless told.</div>
+        <button aria-expanded="false" aria-controls="ans-1">Will anyone be able to tell I have an implant?<span class="plus">+</span></button>
+        <div class="ans" id="ans-1" hidden>No. All components sit inside the body. When deflated, the penis looks and feels natural; when inflated, it is firm like a normal erection. Partners generally cannot tell unless told.</div>
       </div>
       <div class="acc-item">
-        <button aria-expanded="false">Does it change sensation, orgasm or ejaculation?<span class="plus">+</span></button>
-        <div class="ans" hidden>No. The implant replaces only the erectile tissue's ability to become rigid. Skin sensation, the ability to reach orgasm, and ejaculation are all carried by nerves and glands that the surgery does not touch.</div>
+        <button aria-expanded="false" aria-controls="ans-2">Does it change sensation, orgasm or ejaculation?<span class="plus">+</span></button>
+        <div class="ans" id="ans-2" hidden>No. The implant replaces only the erectile tissue's ability to become rigid. Skin sensation, the ability to reach orgasm, and ejaculation are all carried by nerves and glands that the surgery does not touch.</div>
       </div>
       <div class="acc-item">
-        <button aria-expanded="false">What is the biggest risk?<span class="plus">+</span></button>
-        <div class="ans" hidden>Infection, because a device is involved. With antibiotic-coated implants, careful skin preparation and a "no-touch" technique, the risk in most published series is around 1–3 percent. Uncontrolled diabetes and previous implant surgery raise that risk, which is why optimisation before surgery matters so much.</div>
+        <button aria-expanded="false" aria-controls="ans-3">What is the biggest risk?<span class="plus">+</span></button>
+        <div class="ans" id="ans-3" hidden>Infection, because a device is involved. With antibiotic-coated implants, careful skin preparation and a "no-touch" technique, the risk in most published series is around 1–3 percent. Uncontrolled diabetes and previous implant surgery raise that risk, which is why optimisation before surgery matters so much.</div>
       </div>
       <div class="acc-item">
-        <button aria-expanded="false">Is it reversible? Can I go back to tablets later?<span class="plus">+</span></button>
-        <div class="ans" hidden>Treat it as a permanent decision. Implant surgery replaces the natural erectile tissue inside the cylinders, so tablets and injections will not work afterwards. That is exactly why it is reserved for men in whom those options have already failed.</div>
+        <button aria-expanded="false" aria-controls="ans-4">Is it reversible? Can I go back to tablets later?<span class="plus">+</span></button>
+        <div class="ans" id="ans-4" hidden>Treat it as a permanent decision. Implant surgery replaces the natural erectile tissue inside the cylinders, so tablets and injections will not work afterwards. That is exactly why it is reserved for men in whom those options have already failed.</div>
       </div>
       <div class="acc-item">
-        <button aria-expanded="false">How long does an implant last?<span class="plus">+</span></button>
-        <div class="ans" hidden>Modern three-piece devices have mechanical survival in the region of 80–90 percent at ten years in published data, and many work well beyond that. If a component fails, it can be replaced.</div>
+        <button aria-expanded="false" aria-controls="ans-5">How long does an implant last?<span class="plus">+</span></button>
+        <div class="ans" id="ans-5" hidden>Modern three-piece devices have mechanical survival in the region of 80–90 percent at ten years in published data, and many work well beyond that. If a component fails, it can be replaced.</div>
       </div>
       <div class="acc-item">
-        <button aria-expanded="false">I have Peyronie's disease and ED. Do I need two operations?<span class="plus">+</span></button>
-        <div class="ans" hidden>Usually not. When curvature and poor rigidity coexist, an implant with simultaneous straightening (modelling, plication or grafting as needed) addresses both in one procedure. Where erections are still strong, curvature alone is corrected without an implant.</div>
+        <button aria-expanded="false" aria-controls="ans-6">I have Peyronie's disease and ED. Do I need two operations?<span class="plus">+</span></button>
+        <div class="ans" id="ans-6" hidden>Usually not. When curvature and poor rigidity coexist, an implant with simultaneous straightening (modelling, plication or grafting as needed) addresses both in one procedure. Where erections are still strong, curvature alone is corrected without an implant.</div>
+      </div>
+      <div class="acc-item">
+        <button aria-expanded="false" aria-controls="ans-7">Will I lose length?<span class="plus">+</span></button>
+        <div class="ans" id="ans-7" hidden>The honest answer: an implant restores rigidity, not length. Measured erect length after surgery is usually close to what it was before ED began. Men with long-standing, severe ED and penile fibrosis can lose a little — where that risk exists, a pre-operative stretching protocol and, in selected cases, length-preserving surgical techniques are used. Inflated girth is frequently fuller than the erections you have now.</div>
+      </div>
+      <div class="acc-item">
+        <button aria-expanded="false" aria-controls="ans-8">Can I have an MRI, or fly through airport security, with an implant?<span class="plus">+</span></button>
+        <div class="ans" id="ans-8" hidden>Yes to both, with one caveat. Modern implants are MRI-conditional — tell the radiologist you have a device and the scan is planned at the appropriate field strength. Airport walk-through metal detectors are not triggered; the cylinders hold fluid, not metal. Carry your implant card if one is provided.</div>
       </div>
     </div>
   </section>
 
   <!-- ================= BOOK ================= -->
-  <section id="book" style="border-top:0; padding-top:0;">
+  <section id="book" class="book-sec">
     <div class="book">
       <div>
         <h2>Ready to talk it through?</h2>
         <p>Pick a slot online and consult by video, with WhatsApp follow-up. In-person surgical consultations are in Kolkata. Details at <a href="https://malehealthonlinekolkata.com/" target="_blank" rel="noopener" style="color:var(--accent)">malehealthonlinekolkata.com</a>.</p>
+        <span class="bn" lang="bn">বাংলা ও ইংরেজি — উভয় ভাষায়ই পরামর্শের ব্যবস্থা আছে।</span>
       </div>
       <a class="btn btn-primary" href="https://drprabirbasu.zohobookings.in/drprabirbasu" target="_blank" rel="noopener">Book online →</a>
     </div>
@@ -618,11 +790,35 @@
 </div>
 
 <script>
-  // Tabs
+  // Theme toggle (auto → light → dark), persisted
+  const themeBtn = document.getElementById('theme-toggle');
+  const themeOrder = ['auto', 'light', 'dark'];
+  let themeMode = 'auto';
+  try { themeMode = localStorage.getItem('pb-theme') || 'auto'; } catch (e) {}
+  function applyTheme(mode) {
+    themeMode = mode;
+    if (mode === 'auto') { delete document.documentElement.dataset.theme; }
+    else { document.documentElement.dataset.theme = mode; }
+    const icon = mode === 'light' ? '☀' : mode === 'dark' ? '☾' : '◐';
+    const label = mode === 'light' ? 'Light theme (click for dark)' : mode === 'dark' ? 'Dark theme (click for auto)' : 'Auto theme (click for light)';
+    themeBtn.textContent = icon;
+    themeBtn.setAttribute('aria-label', label);
+    themeBtn.title = label;
+    try { localStorage.setItem('pb-theme', mode); } catch (e) {}
+  }
+  applyTheme(themeMode);
+  themeBtn.addEventListener('click', () => {
+    applyTheme(themeOrder[(themeOrder.indexOf(themeMode) + 1) % themeOrder.length]);
+  });
+
+  // Tabs (with roving tabindex)
   const tabs = Array.from(document.querySelectorAll('.tab'));
   const panels = Array.from(document.querySelectorAll('.panel'));
   function selectTab(tab) {
-    tabs.forEach(t => t.setAttribute('aria-selected', String(t === tab)));
+    tabs.forEach(t => {
+      t.setAttribute('aria-selected', String(t === tab));
+      t.tabIndex = t === tab ? 0 : -1;
+    });
     panels.forEach(p => { p.hidden = p.id !== tab.getAttribute('aria-controls'); });
     try { localStorage.setItem('pb-tab', tab.id); } catch (e) {}
   }
@@ -652,9 +848,6 @@
       card.hidden = !(lang === 'all' || card.dataset.lang === lang || card.dataset.lang === 'both');
     });
   }));
-
-  // Pending links do nothing
-  document.querySelectorAll('.card.pending').forEach(c => c.addEventListener('click', e => e.preventDefault()));
 
   // Accordion
   document.querySelectorAll('#faq-acc button').forEach(btn => {
